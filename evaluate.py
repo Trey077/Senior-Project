@@ -1,1 +1,0 @@
-#evaluate accuracy of the model

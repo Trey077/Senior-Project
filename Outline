@@ -13,10 +13,8 @@ project/
 │   └── index.html               # Example HTML template
 │
 ├── app.py                       # Main file for running the app (Flask/Django)
-├── preprocess.py                # Text preprocessing functions
-├── vectorize.py                 # Text vectorization functions
+├── preprocess.py                # Text preprocessing functions, vectorize, and clean
 ├── model.py                     # Code for training and saving models
 ├── clustering.py                # Clustering and similarity analysis functions
 ├── evaluate.py                  # Model evaluation functions
-├── utils.py                     # Utility functions
 └── requirements.txt             # List of dependencies (for pip)
