@@ -1,5 +1,5 @@
 from src.preprocessors import load_data, preprocess_data, vectorize_data
-from src.clustering import cluster_ideas, print_cluster_results
+from src.clustering import cluster_ideas, print_cluster_results, save_clustered_ideas
 from src.evaluate import evaluate_metrics
 from src.visualize_results import visualize_clusters
 
@@ -17,6 +17,8 @@ def main():
         df['Cluster'] = labels  # Add cluster labels back to the original DataFrame
 
         print_cluster_results(df)  # Print cluster results for troubleshooting
+
+        save_clustered_ideas(df, 'Data Sets/cluster_results.csv')
 
 
         evaluate_metrics(df,x, kmeans)

@@ -15,3 +15,10 @@ def print_cluster_results(df):
     for cluster in df['Cluster'].unique():
         print(f"\nCluster {cluster}:")
         print(df[df['Cluster'] == cluster][['Idea ID', 'Description']].head())
+
+
+
+
+def save_clustered_ideas(df, output_file='cluster_results.csv'):
+    df.to_csv(output_file, index=False)
+    print(f"Saved cluster results to {output_file}")
