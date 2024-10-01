@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idea Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="MergeStyles.css">
+  
+</head>
+<body>
+
+<div class="navbar">
+    <a href="Dashboard.html">Home</a>
+    <div class="dropdown">
+        <button class="dropbtn">Actions</button>
+        <div class="dropdown-content">
+            <a href="#">Link 1</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="column">
+        <h3>Ideas List 1</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Idea ID</th>
+                    <th>Idea Name</th>
+                    <th>Idea Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="idea1" onchange="toggleRow(this)"></td>
+                    <td>1</td>
+                    <td>Idea A</td>
+                    <td>Owner 1</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="idea2" onchange="toggleRow(this)"></td>
+                    <td>2</td>
+                    <td>Idea B</td>
+                    <td>Owner 2</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="idea3" onchange="toggleRow(this)"></td>
+                    <td>3</td>
+                    <td>Idea C</td>
+                    <td>Owner 3</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="idea4" onchange="toggleRow(this)"></td>
+                    <td>4</td>
+                    <td>Idea D</td>
+                    <td>Owner 4</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="idea5" onchange="toggleRow(this)"></td>
+                    <td>5</td>
+                    <td>Idea E</td>
+                    <td>Owner 5</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="column">
+        <h3>Ideas List 2</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Idea ID</th>
+                    <th>Idea Name</th>
+                    <th>Idea Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="idea6" onchange="toggleRow(this)"></td>
+                    <td>6</td>
+                    <td>Idea F</td>
+                    <td>Owner 6</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="idea7" onchange="toggleRow(this)"></td>
+                    <td>7</td>
+                    <td>Idea G</td>
+                    <td>Owner 7</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="idea8" onchange="toggleRow(this)"></td>
+                    <td>8</td>
+                    <td>Idea H</td>
+                    <td>Owner 8</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="idea9" onchange="toggleRow(this)"></td>
+                    <td>9</td>
+                    <td>Idea I</td>
+                    <td>Owner 9</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="idea10" onchange="toggleRow(this)"></td>
+                    <td>10</td>
+                    <td>Idea J</td>
+                    <td>Owner 10</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div style="height: 40px;"></div>
+
+<button class="merge-button" onclick="mergeIdeas()">Merge Ideas</button>
+
+<script>
+    function mergeIdeas() {
+        alert("Ideas Merged!");
+    }
+
+    function toggleRow(checkbox) {
+        const row = checkbox.closest('tr');
+        if (checkbox.checked) {
+            row.classList.add('selected');
+        } else {
+            row.classList.remove('selected');
+        }
+    }
+</script>
+
+</body>
+</html>

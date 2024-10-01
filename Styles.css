@@ -1,0 +1,249 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+}
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+}
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+.dropdown .dropbtn {
+    font-size: 16px;  
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dashboard {
+    margin: 20px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid #ddd;
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+th {
+    cursor: pointer;
+}
+th.sortable:hover {
+    background-color: #f1f1f1;
+}
+.Category{
+    text-align: center;
+}
+    .idea-category { 
+        margin-left: 20%;  
+        border: 2px solid darkgrey;
+        padding: 4px;
+        border-radius: 5px;
+        background-color: lightgray;
+    }
+
+
+    .idea-tag1{
+        color: white;
+        background-color: red;
+        border: 2px solid black; 
+        border-radius: 5px; 
+        padding: 2px 5px; 
+        margin-right: 4px; 
+        display: inline-block; 
+    }
+    .idea-tag2{
+        color: white;
+        background-color: blue;
+        border: 2px solid black; 
+        border-radius: 5px; 
+        padding: 2px 5px; 
+        margin-right: 4px; 
+        display: inline-block; 
+    }
+    .idea-tag3{
+        color: white;
+        background-color: green;
+        border: 2px solid black; 
+        border-radius: 5px; 
+        padding: 2px 5px; 
+        margin-right: 4px; 
+        display: inline-block; 
+    }
+    .idea-tag4{
+        color: white;
+        background-color: grey;
+        border: 2px solid black; 
+        border-radius: 5px; 
+        padding: 2px 5px; 
+        margin-right: 4px; 
+        display: inline-block; 
+    }
+    .idea-tag5{
+        color: white;
+        background-color: lightblue;
+        border: 2px solid black; 
+        border-radius: 5px; 
+        padding: 2px 5px; 
+        margin-right: 4px; 
+        display: inline-block; 
+    }
+    .idea-tag6{
+        color: white;
+        background-color: lightcoral;
+        border: 2px solid black; 
+        border-radius: 5px; 
+        padding: 2px 5px; 
+        margin-right: 4px; 
+        display: inline-block; 
+    }
+    .idea-tag7{
+        color: white;
+        background-color: lightsalmon;
+        border: 2px solid black; 
+        border-radius: 5px; 
+        padding: 2px 5px; 
+        margin-right: 4px; 
+        display: inline-block; 
+    }
+    .idea-tag8{
+        color: white;
+        background-color: orange;
+        border: 2px solid black; 
+        border-radius: 5px; 
+        padding: 2px 5px; 
+        margin-right: 4px; 
+        display: inline-block; 
+    }
+    .idea-tag9{
+        color: white;
+        background-color: magenta;
+        border: 2px solid black; 
+        border-radius: 5px; 
+        padding: 2px 5px; 
+        margin-right: 4px; 
+        display: inline-block; 
+    }
+
+    .idea-statusComment {
+        margin-left: 20%;  
+        border: 2px solid black;
+        font-weight: bold;  
+        color: white; 
+        padding: 5px; 
+        border-radius: 5px; 
+        background-color: blue; 
+    }
+    .idea-statusFuture {
+        margin-left: 20%;  
+        border: 2px solid black;
+        font-weight: bold;  
+        color:  white; 
+        padding: 5px; 
+        border-radius: 5px; 
+        background-color: lightgreen; 
+    }
+    .idea-statusReview {
+        margin-left: 20%;  
+        border: 2px solid black;
+        font-weight: bold;  
+        color:  white; 
+        padding: 5px; 
+        border-radius: 5px; 
+        background-color: lightblue; 
+    }
+    .idea-statusTerminated {
+        margin-left: 20%;  
+        border: 2px solid black;
+        font-weight: bold;  
+        color: white; 
+        padding: 5px; 
+        border-radius: 5px; 
+        background-color: black; 
+    }
+    .idea-statusProgress {
+        margin-left: 20%;  
+        border: 2px solid black;
+        font-weight: bold;  
+        color:  white; 
+        padding: 5px; 
+        border-radius: 5px; 
+        background-color: green; 
+    }
+    .idea-statusExist {
+        margin-left: 20%;  
+        border: 2px solid black;
+        font-weight: bold;  
+        color:  white; 
+        padding: 5px; 
+        border-radius: 5px; 
+        background-color: lightcoral; 
+    }
+    .idea-statusShipped {
+        margin-left: 20%;  
+        border: 2px solid black;
+        font-weight: bold;  
+        color:  white; 
+        padding: 5px; 
+        border-radius: 5px; 
+        background-color: lightgreen; 
+    }
+    .dropdown .dropbtn1 i {
+        color: black; 
+    }
+    a {
+        text-decoration: none; /* Remove underline from links */
+        color: blue; /* Change color of links */
+    }
+    a:hover {
+        text-decoration: underline; /* Underline on hover */
+    }
+    .selected {
+        background-color: darkgrey;
+        color: blue;
+    }
+
