@@ -1,0 +1,186 @@
+html {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+body {
+    background-color: white;
+    margin: 0;
+}
+
+.NavbarLogo {
+    width: 7em; /* remains the same */
+    float: left;
+}
+.navbar {
+    overflow: hidden;
+
+}
+.navbar a {
+    float: left;
+    font-size: 1em; /* 16px */
+    color: black;
+    text-align: center;
+    padding: 0.875em 1em; /* 14px 16px */
+    text-decoration: none;
+}
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+.dropdown .dropbtn {
+    font-size: 1em; /* 16px */
+    border: none;
+    outline: none;
+    color: black;
+    padding: 0.875em 1em; /* 14px 16px */
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+.navbar a:hover,
+.dropdown:hover .dropbtn {
+    background-color: #00BD52;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 10em; /* 160px */
+    box-shadow: 0px 0.5em 1em 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 0.75em 1em; /* 12px 16px */
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+.dropdown-content a:hover {
+    background-color: #00BD52;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dashboard {
+    margin: 1.25em; /* 20px */
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 0.0625em solid #ddd; /* 1px */
+}
+th, td {
+    padding: 0.5em; /* 8px */
+    text-align: left;
+}
+th {
+    cursor: pointer;
+}
+th.sortable:hover {
+    background-color: #f1f1f1;
+}
+.Category {
+    text-align: center;
+}
+.idea-category { 
+    margin-left: 1.25em; /* 20px */
+    border: 0.125em solid darkgrey; /* 2px */
+    padding: 0.25em; /* 4px */
+    border-radius: 0.3125em; /* 5px */
+    background-color: lightgray;
+}
+.idea-tag1,
+.idea-tag2,
+.idea-tag3,
+.idea-tag4,
+.idea-tag5,
+.idea-tag6,
+.idea-tag7,
+.idea-tag8,
+.idea-tag9 {
+    color: white;
+    border: 0.125em solid black; /* 2px */
+    border-radius: 0.3125em; /* 5px */
+    padding: 0.125em 0.3125em; /* 2px 5px */
+    margin-right: 0.25em; /* 4px */
+    display: inline-block;
+}
+.idea-tag1 { background-color: red; }
+.idea-tag2 { background-color: blue; }
+.idea-tag3 { background-color: green; }
+.idea-tag4 { background-color: grey; }
+.idea-tag5 { background-color: lightblue; }
+.idea-tag6 { background-color: lightcoral; }
+.idea-tag7 { background-color: lightsalmon; }
+.idea-tag8 { background-color: orange; }
+.idea-tag9 { background-color: magenta; }
+
+.idea-statusComment,
+.idea-statusFuture,
+.idea-statusReview,
+.idea-statusTerminated,
+.idea-statusProgress,
+.idea-statusExist,
+.idea-statusShipped {
+    margin-left: 1.25em; /* 20px */
+    border: 0.125em solid black; /* 2px */
+    font-weight: bold;  
+    color: white; 
+    padding: 0.3125em; /* 5px */
+    border-radius: 0.3125em; /* 5px */
+}
+.idea-statusComment { background-color: blue; }
+.idea-statusFuture { background-color: lightgreen; }
+.idea-statusReview { background-color: lightblue; }
+.idea-statusTerminated { background-color: black; }
+.idea-statusProgress { background-color: green; }
+.idea-statusExist { background-color: lightcoral; }
+.idea-statusShipped { background-color: lightgreen; }
+
+.dropdown .dropbtn1 i {
+    color: black; 
+}
+a {
+    text-decoration: none; /* Remove underline from links */
+    color: blue; /* Change color of links */
+}
+a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+.selected {
+    background-color: darkgrey;
+    color: blue;
+}
+.search-bar {
+    margin-left: 8em; /* Push the search bar to the right */
+    margin-top: 0.75em; /* 0.5% of 16px */
+}
+.search-bar input {
+    padding: 0.3125em; /* 5px */
+    border: none;
+    border-radius: 0.3125em; /* 5px */
+}
+th {
+    cursor: move; 
+}
+.highlight {
+    background-color: yellow; /* Highlight color */
+}
+.context-menu {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 0.0625em solid #ccc; /* 1px */
+    z-index: 1000;
+    box-shadow: 0.125em 0.125em 0.3125em rgba(0, 0, 0, 0.2); /* 2px 2px 5px */
+}
+.context-menu div {
+    padding: 0.5em; /* 8px */
+    cursor: pointer;
+}
+.context-menu div:hover {
+    background: #f1f1f1;
+}
