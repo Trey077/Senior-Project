@@ -1,16 +1,31 @@
-# This is a sample Python script.
+from src.preprocessors import load_data, preprocess_data, vectorize_data
+from src.clustering import cluster_ideas, print_cluster_results, save_clustered_ideas
+from src.evaluate import evaluate_metrics
+from src.visualize_results import visualize_clusters
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+def main():
+    file_path = 'Data Sets/ideas.csv'
+    df = load_data(file_path)
+
+    if df is not None:
+        "process of actually getting this to work"
+        df = preprocess_data(df)
+
+        x, vectorizer = vectorize_data(df)
+
+        labels, kmeans = cluster_ideas(x, num_clusters=5)
+        df['Cluster'] = labels  # Add cluster labels back to the original DataFrame
+
+        print_cluster_results(df)  # Print cluster results for troubleshooting
+
+        save_clustered_ideas(df, 'Data Sets/cluster_results.csv')
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+        evaluate_metrics(df,x, kmeans)
 
 
-# Press the green button in the gutter to run the script.
+        visualize_clusters(df, x, kmeans)
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()

@@ -1,0 +1,112 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+}
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+}
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+.dropdown .dropbtn {
+    font-size: 16px;  
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+.column {
+    width: 45%; /* Adjust width as necessary */
+    background-color: white;
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
+.merge-button {
+    display: block;
+    margin: 40px auto;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.merge-button:hover {
+    background-color: #218838;
+}
+.selected {
+    background-color: lightgrey;
+    color: blue;
+}
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center contents horizontally */
+    margin-top: 20px; /* Add some space above the button */
+}
+
+textarea {
+    margin-top: 10px; /* Space between button and textarea */
+    width: 100%; /* Make it responsive */
+    max-width: 600px; /* Set a max width */
+    padding: 10px; /* Padding for better aesthetics */
+    border: 1px solid #ccc; /* Border for textarea */
+    border-radius: 4px; /* Rounded corners */
+}
