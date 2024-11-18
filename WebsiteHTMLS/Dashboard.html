@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <script type="text/javascript" charset="utf-8" src="https://secure.aha.io/assets/javascript_api/aha-api.latest.js"></script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
@@ -32,7 +31,6 @@
     <table id="ideaTable">
         <thead>
             <tr>
-                <th>Select</th>
                 <th>Idea ID</th>
                 <th>Idea Name</th>
                 <th>Idea Category</th>
@@ -58,105 +56,97 @@
         </thead>
         <tbody>
             <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=1">1</a></td>  
-                <td><a href="ideaDetails.html?id=1">Idea One</a></td>
+                <td><a class="button" onclick="openDrawer()">1</a></td>  
+                <td><a href="ideaDetails.html?">Idea One</a></td>
                 <td><span class="idea-category">Category A</span></td>
                 <td>Description of Idea One</td>
                 <td><a href="userProfile.html?user=JohnDoe">John Doe</a></td>
                 <td><span class="idea-statusComment">Open for Comment</span></td>
-                <td>2023-01-01</td>
+                <td>January 16, 2024</td>
                 <td>10</td>
                 <td>8</td>
                 <td><span class="idea-tag1">tag1</span>, <span class="idea-tag2">tag2</span></td>
             </tr>
             <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=2">2</a></td>  
-                <td><a href="ideaDetails.html?id=2">Idea Two</a></td>
+                <td><a class="button" onclick="openDrawer()">2</a></td>   
+                <td><a href="ideaDetails.html?">Idea Two</a></td>
                 <td><span class="idea-category">Category B</span></td>
                 <td>Description of Idea Two</td>
                 <td><a href="userProfile.html?user=JaneSmith">Jane Smith</a></td>
                 <td><span class="idea-statusReview">Under Review</span></td>
-                <td>2023-02-01</td>
+                <td>February 10, 2024</td>
                 <td>15</td>
                 <td>12</td>
                 <td><span class="idea-tag3">tag3</span>, <span class="idea-tag4">tag4</span></td>
             </tr>
-            <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=3">3</a></td>  
-                <td><a href="ideaDetails.html?id=3">Idea Three</a></td>
+            <tr>     
+                <td><a class="button" onclick="openDrawer()">3</a></td>  
+                <td><a href="ideaDetails.html?">Idea Three</a></td>
                 <td><span class="idea-category">Category C</span></td>
                 <td>Description of Idea Three</td>
                 <td><a href="userProfile.html?user=JohnnyCash">Johnny Cash</a></td>
                 <td><span class="idea-statusShipped">Shipped</span></td>
-                <td>2023-02-10</td>
+                <td>March 20, 2024</td>
                 <td>22</td>
                 <td>14</td>
                 <td><span class="idea-tag3">tag3</span>, <span class="idea-tag2">tag2</span></td>
             </tr>
-            <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=4">4</a></td>  
-                <td><a href="ideaDetails.html?id=4">Idea Four</a></td>
+            <tr>  
+                <td><a class="button" onclick="openDrawer()">4</a></td>    
+                <td><a href="ideaDetails.html?">Idea Four</a></td>
                 <td><span class="idea-category">Category A</span></td>
                 <td>Description of Idea Four</td>
                 <td><a href="userProfile.html?user=BobDylan">Bob Dylan</a></td>
                 <td><span class="idea-statusProgress">In Progress</span></td>
-                <td>2023-03-15</td>
+                <td>April 7, 2024</td>
                 <td>30</td>
                 <td>18</td>
                 <td><span class="idea-tag4">tag4</span>, <span class="idea-tag1">tag1</span></td>
             </tr>
-            <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=6">6</a></td>  
-                <td><a href="ideaDetails.html?id=6">Idea Six</a></td>
+            <tr>  
+                <td><a class="button" onclick="openDrawer()">5</a></td>    
+                <td><a href="ideaDetails.html?">Idea Six</a></td>
                 <td><span class="idea-category">Category C</span></td>
                 <td>Description of Idea Six</td>
                 <td><a href="userProfile.html?user=EltonJohn">Elton John</a></td>
                 <td><span class="idea-statusExist">Already Exist</span></td>
-                <td>2023-05-25</td>
+                <td>June 3, 2024</td>
                 <td>12</td>
                 <td>5</td>
                 <td><span class="idea-tag6">tag6</span>, <span class="idea-tag3">tag3</span></td>
             </tr>
-            <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=7">7</a></td>  
-                <td><a href="ideaDetails.html?id=7">Idea Seven</a></td>
+            <tr> 
+                <td><a class="button" onclick="openDrawer()">6</a></td>    
+                <td><a href="ideaDetails.html?">Idea Seven</a></td>
                 <td><span class="idea-category">Category A</span></td>
                 <td>Description of Idea Seven</td>
                 <td><a href="userProfile.html?user=TaylorSwift">Taylor Swift</a></td>
                 <td><span class="idea-statusProgress">In Progress</span></td>
-                <td>2023-06-30</td>
+                <td>July 4, 2024</td>
                 <td>28</td>
                 <td>22</td>
                 <td><span class="idea-tag7">tag7</span>, <span class="idea-tag1">tag1</span></td>
             </tr>
-            <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=8">8</a></td>  
-                <td><a href="ideaDetails.html?id=8">Idea Eight</a></td>
+            <tr>   
+                <td><a class="button" onclick="openDrawer()">7</a></td>    
+                <td><a href="ideaDetails.html?">Idea Eight</a></td>
                 <td><span class="idea-category">Category B</span></td>
                 <td>Description of Idea Eight</td>
                 <td><a href="userProfile.html?user=BillieEilish">Billie Eilish</a></td>
                 <td><span class="idea-statusFuture">Future Development</span></td>
-                <td>2023-07-12</td>
+                <td>August 30, 2024</td>
                 <td>36</td>
                 <td>19</td>
                 <td><span class="idea-tag8">tag8</span>, <span class="idea-tag4">tag4</span></td>
             </tr>
             <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=9">9</a></td>  
-                <td><a href="ideaDetails.html?id=9">Idea Nine</a></td>
+                <td><a class="button" onclick="openDrawer()">8</a></td>   
+                <td><a href="ideaDetails.html?">Idea Nine</a></td>
                 <td><span class="idea-category">Category C</span></td>
                 <td>Description of Idea Nine</td>
                 <td><a href="userProfile.html?user=FreddieMercury">Freddie Mercury</a></td>
                 <td><span class="idea-statusTerminated">Terminated</span></td>
-                <td>2023-08-15</td>
+                <td>September 1, 2024</td>
                 <td>50</td>
                 <td>30</td>
                 <td><span class="idea-tag9">tag9</span>, <span class="idea-tag2">tag2</span></td>
@@ -167,6 +157,54 @@
         
     </table>
 </div>
+
+<div id="Drawer" class="drawer">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeDrawer()">&times;</a>
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">Idea ID</div>
+        <div class="drawer-sub-header">Created by: <a href="#">"Creator"</a> in Dream Factory by TruBridge Ideas Portal on May 17, 2022</div>
+        <p>Sample paragraph: This is the placeholder for the idea description</p>
+
+
+        <ul class="nav-menu">
+            <li><a id="drawerNav" href="#" class="drawerNav">Overview</a></li>
+        </ul>
+
+
+        <div class="row"> 
+            <p>Content for the first row goes here.</p>
+        </div>
+        <div class="row">
+            <p>Content for the second row goes here.</p>
+        </div>
+        <div class="row">
+            <p>Content for the third row goes here.</p>
+        </div>
+        <div class="row">
+            <p>Content for the fourth row goes here.</p>
+        </div>
+        <div class="row">
+            <p>Content for the fifth row goes here.</p>
+        </div>
+        <div class="row">
+            <p>Content for the sixth row goes here.</p>
+        </div>
+    </div>
+  </div>
+
+
+  <script>
+    function openDrawer() {
+      document.getElementById("Drawer").style.width = "40%";
+    }
+    
+    function closeDrawer() {
+      document.getElementById("Drawer").style.width = "0%";
+    }
+    </script>
+
+
+
 
 <!-- Context menu for right-click -->
 <div class="context-menu" id="contextMenu">
@@ -183,7 +221,8 @@
         const rows = Array.from(table.rows).slice(1);
         const sortedRows = rows.sort((a, b) => {
             const cellA = a.cells[columnIndex].innerText.toLowerCase();
-            const cellB = b.cells[columnIndex].innerText.toLowerCase();
+            
+
             return order === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
         });
         const tbody = table.tBodies[0];
