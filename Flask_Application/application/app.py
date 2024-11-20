@@ -9,6 +9,9 @@ api_key = os.getenv("API_KEY")
 
 app = Flask(__name__)
 
+
+#def startup():
+
 @app.route('/login')
 def login():
     if request.method == 'POST':
