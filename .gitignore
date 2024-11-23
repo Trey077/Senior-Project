@@ -1,1 +1,2 @@
-.env
+/Flask_Application
+.env*
