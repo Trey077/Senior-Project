@@ -9,7 +9,7 @@ load_dotenv()
 api_key = os.getenv("API_KEY")
 
 app = create_app()
-
+"""
 # Test database connection and access
 with app.app_context():
     try:
@@ -17,7 +17,7 @@ with app.app_context():
         for row in result:
             print(row)
     except Exception as e:
-        print(f"Error accessing the database: {e}")
+        print(f"Error accessing the database: {e}")"""
 
 if __name__ == '__main__':
     app.run(debug=True)
