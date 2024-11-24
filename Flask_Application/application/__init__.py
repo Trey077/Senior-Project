@@ -3,6 +3,8 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask.cli import load_dotenv
+from sqlalchemy import text
+import shutil
 
 # Load environment variables from a .env file
 load_dotenv()
@@ -12,7 +14,9 @@ api_key = os.getenv("API_KEY")
 
 # Initialize the SQLAlchemy object
 db = SQLAlchemy()
-DB_NAME = "IdeaStorage.db"
+#DB_NAME = "../notebooks/persistent_database.sqlite"
+DB_NAME = os.getenv('DATABASE_PATH', '../notebooks/persistent_database.sqlite')
+
 
 def create_app():
     # Create a Flask application instance
@@ -50,13 +54,24 @@ def create_app():
     def merge_page():
         return render_template('Merge Page.html')
 
+    #temp route for testing connection
+    @app.route('/test-database')
+    def test_database():
+        try:
+            results = db.session.execute(text('SELECT * FROM Idea_Database')).fetchall()
+            return render_template('test_database.html', results=results)
+        except Exception as e:
+            return f"Error accessing database: {e}"
+
     # Create the database tables if they do not exist
     with app.app_context():
         db.create_all()
 
     return app
-
+#original attempt to make sql database
 def create_database(app):
     if not path.exists('website/' + DB_NAME):
         db.create_all(app=app)
         print('Created Database!')
+
+
