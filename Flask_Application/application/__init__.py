@@ -49,7 +49,7 @@ def create_app():
     @app.route('/Merge Page')
     def merge_page():
         return render_template('Merge Page.html')
-"""
+
     #temp route for testing connection
     @app.route('/test-database')
     def test_database():
@@ -72,11 +72,10 @@ def create_app():
             print(f"Error creating tables: {e}")
 
     return app
-    """
-"""
+
+
 #original attempt to make sql database
 def create_database(app):
     if not path.exists('website/' + DB_NAME):
         db.create_all(app=app)
         print('Created Database!')
-"""
