@@ -13,12 +13,13 @@ api_key = os.getenv("API_KEY")
 
 # Initialize the SQLAlchemy object
 db = SQLAlchemy()
-DB_NAME = os.getenv('DATABASE_PATH')
+DB_NAME = os.path.abspath(os.getenv('DATABASE_PATH'))
+print(f"Resolved database path: {DB_NAME}")
 
 def create_app():
     # Create a Flask application instance
     app = Flask(__name__)
-    
+
     # Set the secret key for session management
     app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
     # Set the database URI for SQLAlchemy
@@ -50,32 +51,28 @@ def create_app():
     def merge_page():
         return render_template('Merge Page.html')
 
-    #temp route for testing connection
+    # Temporary route for testing connection and displaying data
     @app.route('/test-database')
     def test_database():
         try:
-            results = db.session.execute(text('SELECT * FROM Idea_Database')).fetchall()
-            return render_template('test_database.html', results=results)
+            # Fetch all columns from the 'Idea_Database' table
+            result = db.session.execute(text("SELECT * FROM Idea_Database;")).fetchall()
+
+            # Convert the result into a list of dictionaries for easier access in the template
+            column_names = ['Idea Reference', 'Name', 'Categories', 'Assigned_to', 'Status', 'Created_at', 'Votes',
+                            'Tags', 'Description', 'Idea ID', 'Email']
+            rows = []
+            for row in result:
+                row_data = {column_names[i]: row[i] for i in range(len(column_names))}
+                rows.append(row_data)
+
+            return render_template('test_database.html', rows=rows)
         except Exception as e:
+            print(f"Error accessing database: {e}")
             return f"Error accessing database: {e}"
-    # Create the database tables if they do not exist
-    with app.app_context():
-        try:
-            # Check if the tables exist
-            result = db.session.execute(text('SELECT name FROM sqlite_master WHERE type="table";')).fetchall()
-            if not result:
-                db.create_all()  # This will create the tables if they don't exist
-                print("Created database and tables.")
-            else:
-                print(f"Tables already exist: {result}")
-        except Exception as e:
-            print(f"Error creating tables: {e}")
+
+
 
     return app
 
 
-#original attempt to make sql database
-def create_database(app):
-    if not path.exists('website/' + DB_NAME):
-        db.create_all(app=app)
-        print('Created Database!')
