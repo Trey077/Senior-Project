@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idea Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='MergeStyles.css') }}">
+
+    <style>
+        /* Add your existing CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .navbar .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+
+        .navbar .dropdown .dropbtn {
+            cursor: pointer;
+        }
+
+        .navbar .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        }
+
+        .navbar .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .column {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .column table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .column th, .column td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .column tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .merge-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .merge-button:hover {
+            background-color: #0056b3;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center contents horizontally */
+            margin-top: 20px; /* Add some space above the button */
+        }
+
+        textarea {
+            margin-top: 10px; /* Space between button and textarea */
+            width: 100%; /* Make it responsive */
+            max-width: 600px; /* Set a max width */
+            padding: 10px; /* Padding for better aesthetics */
+            border: 1px solid #ccc; /* Border for textarea */
+            border-radius: 4px; /* Rounded corners */
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="{{ url_for('home') }}">Home</a>
+    <div class="dropdown">
+        <button class="dropbtn">Actions</button>
+        <div class="dropdown-content">
+            <a href="#">Link 1</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="column">
+        <h3>Ideas List 1</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Idea ID</th>
+                    <th>Idea Name</th>
+                    <th>Idea Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for row in rows %}
+                <tr>
+                      <td>{{ row['Name'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="column">
+        <h3>Ideas List 2</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Idea ID</th>
+                    <th>Idea Name</th>
+                    <th>Idea Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="idea6" onchange="toggleRow(this)"></td>
+                    <td>6</td>
+                    <td>Idea F</td>
+                    <td>Owner 6</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="idea7" onchange="toggleRow(this)"></td>
+                    <td>7</td>
+                    <td>Idea G</td>
+                    <td>Owner 7</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="idea8" onchange="toggleRow(this)"></td>
+                    <td>8</td>
+                    <td>Idea H</td>
+                    <td>Owner 8</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="idea9" onchange="toggleRow(this)"></td>
+                    <td>9</td>
+                    <td>Idea I</td>
+                    <td>Owner 9</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="idea10" onchange="toggleRow(this)"></td>
+                    <td>10</td>
+                    <td>Idea J</td>
+                    <td>Owner 10</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="button-container">
+    <button class="merge-button" onclick="mergeIdeas()">Merge Ideas</button>
+    <textarea id="mergedIdeas" rows="4" cols="50" readonly placeholder="Selected ideas will be displayed here..."></textarea>
+</div>
+
+<script>
+    function mergeIdeas() {
+        const selectedIdeas = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(checkbox => {
+            const row = checkbox.closest('tr');
+            return {
+                id: row.cells[1].textContent,
+                name: row.cells[2].textContent,
+                owner: row.cells[3].textContent
+            };
+        });
+
+        const mergedIdeasTextArea = document.getElementById('mergedIdeas');
+
+        if (selectedIdeas.length > 0) {
+            mergedIdeasTextArea.value = "Merged Ideas:\n" + selectedIdeas.map(idea => `${idea.name} (ID: ${idea.id}, Owner: ${idea.owner})`).join("\n");
+        } else {
+            mergedIdeasTextArea.value = "No ideas selected to merge!";
+        }
+    }
+
+    function toggleRow(checkbox) {
+        const row = checkbox.closest('tr');
+        if (checkbox.checked) {
+            row.classList.add('selected');
+        } else {
+            row.classList.remove('selected');
+        }
+    }
+</script>
+
+</body>
+</html>
