@@ -1,0 +1,9 @@
+flask
+Flask-SQLAlchemy
+flask-login
+Scikit-learn
+pandas
+Tensorflow
+top2vec
+pytorch
+Scipy 1.12

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../static/Styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+</head>
+
+<body>
+<header>
+<a href="{{ url_for('test_database', page=1) }}"><img class="NavbarLogo" src="../static/Pictures/CPSI_107301_Intranet_logo_resizes_V1.png" alt="TruBridge Logo"></a>
+    <div class="navbar">
+        <a href="{{ url_for('test_database', page=1) }}">Home</a>
+        <div class="dropdown">
+            <button class="dropbtn">Actions
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="{{ url_for('merge_page') }}">Merge</a>
+            </div>
+        </div>
+    </div>
+    </header>
+    <h1>Product Owner Tool Dashboard</h1>
+
+   {% if rows %}
+ <table id="customizable-table">
+    <thead>
+        <tr>
+            <th draggable="true" id="col1">Idea Reference</th>
+            <th draggable="true" id="col2">Name</th>
+            <th draggable="true" id="col3">Categories</th>
+            <th draggable="true" id="col4">Assigned To</th>
+            <th draggable="true" id="col5">Status</th>
+            <th draggable="true" id="col6">Created At</th>
+            <th draggable="true" id="col7">Votes</th>
+            <th draggable="true" id="col8">Tags</th>
+            <th draggable="true" id="col9">Description</th>
+            <th draggable="true" id="col10">Email</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+                <tr>
+                    <td><span id="reference"><a href="#">{{ row['Idea Reference'] }}</a></span></td>
+                    <td >{{ row['Name'] }}</td>
+                    <td><li id="categories">{{ row['Categories'] }}</li></td>
+                    <td><a href="#">{{ row['Assigned_to'] }}</a></td>
+                    <td>{{ row['Status'] }}</td>
+                    <td>{{ row['Created_at'] }}</td>
+                    <td>{{ row['Votes'] }}</td>
+                    <td>{{ row['Tags'] }}</td>
+                    <td>{{ row['Description'] }}</td>
+                    <td><a href="#">{{ row['Email'] }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No data found.</p>
+{% endif %}
+
+
+
+    <!-- Pagination controls -->
+<div class="pagination">
+    {% if page > 1 %}
+        <a href="{{ url_for('test_database', page=1) }}" class="pagination-btn">First</a>
+        <a href="{{ url_for('test_database', page=page-1) }}" class="pagination-btn">‹ Prev</a>
+    {% else %}
+        <span class="pagination-btn disabled">First</span>
+        <span class="pagination-btn disabled">‹ Prev</span>
+    {% endif %}
+
+    <span class="pagination-info">Page {{ page }} of {{ total_pages }}</span>
+
+    {% if page < total_pages %}
+        <a href="{{ url_for('test_database', page=page+1) }}" class="pagination-btn">Next ›</a>
+        <a href="{{ url_for('test_database', page=total_pages) }}" class="pagination-btn">Last</a>
+    {% else %}
+        <span class="pagination-btn disabled">Next ›</span>
+        <span class="pagination-btn disabled">Last</span>
+    {% endif %}
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const table = document.getElementById("customizable-table");
+        const headers = table.querySelectorAll("th");
+        const rows = table.querySelector("tbody").children;
+
+        // Enable drag and drop
+        headers.forEach(header => {
+            header.addEventListener("dragstart", handleDragStart);
+            header.addEventListener("dragover", handleDragOver);
+            header.addEventListener("drop", handleDrop);
+            header.addEventListener("dragenter", handleDragEnter);
+            header.addEventListener("dragleave", handleDragLeave);
+        });
+
+        let draggedHeader = null;
+
+        // Drag Start: Store the header that is being dragged
+        function handleDragStart(e) {
+            draggedHeader = e.target;
+            e.target.style.opacity = "0.5"; // Reduce opacity to show it's being dragged
+        }
+
+        // Drag Over: Allow the dragged column to be dropped
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.target.classList.add("drag-over"); // Add visual feedback when hovering
+        }
+
+        // Drop: Handle the drop action and swap the columns
+        function handleDrop(e) {
+            e.preventDefault();
+            if (e.target.tagName.toLowerCase() === "th" && draggedHeader !== e.target) {
+                const draggedIndex = Array.from(headers).indexOf(draggedHeader);
+                const targetIndex = Array.from(headers).indexOf(e.target);
+
+                // Swap column headers
+                const tempHeader = draggedHeader.textContent;
+                draggedHeader.textContent = e.target.textContent;
+                e.target.textContent = tempHeader;
+
+                // Swap corresponding column data in each row
+                for (let row of rows) {
+                    const draggedCell = row.children[draggedIndex];
+                    const targetCell = row.children[targetIndex];
+
+                    row.replaceChild(draggedCell, targetCell);
+                    row.insertBefore(targetCell, row.children[draggedIndex]);
+                }
+
+                // Save the column order in localStorage
+                saveColumnOrder();
+            }
+            e.target.classList.remove("drag-over");
+        }
+
+        // Drag Enter: Add visual feedback
+        function handleDragEnter(e) {
+            if (e.target.tagName.toLowerCase() === "th") {
+                e.target.classList.add("drag-over");
+            }
+        }
+
+        // Drag Leave: Remove visual feedback
+        function handleDragLeave(e) {
+            if (e.target.tagName.toLowerCase() === "th") {
+                e.target.classList.remove("drag-over");
+            }
+        }
+
+        // Save column order to localStorage
+        function saveColumnOrder() {
+            const columnOrder = Array.from(headers).map(header => header.id);
+            localStorage.setItem("columnOrder", JSON.stringify(columnOrder));
+        }
+
+        // Load column order from localStorage (if available)
+        function loadColumnOrder() {
+            const savedOrder = JSON.parse(localStorage.getItem("columnOrder"));
+            if (savedOrder) {
+                const newHeaders = [];
+                const newRows = [];
+
+                for (const colId of savedOrder) {
+                    const header = document.getElementById(colId);
+                    newHeaders.push(header);
+
+                    // Get the column data from each row and reorder
+                    for (let row of rows) {
+                        const cell = row.querySelector(`#${colId}`);
+                        newRows.push(cell);
+                    }
+                }
+
+                // Reorder the columns based on saved order
+                const tbody = table.querySelector("tbody");
+                newHeaders.forEach(header => {
+                    table.querySelector("thead tr").appendChild(header);
+                });
+
+                newRows.forEach(cell => {
+                    tbody.appendChild(cell.parentNode); // Append the entire row with the correct column order
+                });
+            }
+        }
+
+        // Load the saved column order on page load
+        loadColumnOrder();
+    });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const table = document.getElementById("customizable-table");
+    const headers = table.querySelectorAll("th");
+    const rows = table.querySelector("tbody").children;
+
+    let draggedHeader = null;
+
+    // Drag Start: Store the header that is being dragged
+    function handleDragStart(e) {
+        draggedHeader = e.target;
+        e.target.style.opacity = "0.5"; // Reduce opacity to show it's being dragged
+        e.target.classList.add('grabbing'); // Add the grabbing class to change the cursor
+    }
+
+    // Drag End: Reset the cursor when the drag ends
+    function handleDragEnd(e) {
+        e.target.classList.remove('grabbing'); // Remove grabbing class
+        e.target.style.opacity = "1"; // Reset the opacity
+    }
+
+    // Drag Over: Allow the dragged column to be dropped
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.target.classList.add("drag-over"); // Add visual feedback when hovering
+    }
+
+    // Drop: Handle the drop action and swap the columns
+    function handleDrop(e) {
+        e.preventDefault();
+        if (e.target.tagName.toLowerCase() === "th" && draggedHeader !== e.target) {
+            const draggedIndex = Array.from(headers).indexOf(draggedHeader);
+            const targetIndex = Array.from(headers).indexOf(e.target);
+
+            // Swap column headers
+            const tempHeader = draggedHeader.textContent;
+            draggedHeader.textContent = e.target.textContent;
+            e.target.textContent = tempHeader;
+
+            // Swap corresponding column data in each row
+            for (let row of rows) {
+                const draggedCell = row.children[draggedIndex];
+                const targetCell = row.children[targetIndex];
+
+                row.replaceChild(draggedCell, targetCell);
+                row.insertBefore(targetCell, row.children[draggedIndex]);
+            }
+
+            // Save the column order in localStorage
+            saveColumnOrder();
+        }
+        e.target.classList.remove("drag-over");
+    }
+
+    // Drag Enter: Add visual feedback
+    function handleDragEnter(e) {
+        if (e.target.tagName.toLowerCase() === "th") {
+            e.target.classList.add("drag-over");
+        }
+    }
+
+    // Drag Leave: Remove visual feedback
+    function handleDragLeave(e) {
+        if (e.target.tagName.toLowerCase() === "th") {
+            e.target.classList.remove("drag-over");
+        }
+    }
+
+    // Save column order to localStorage
+    function saveColumnOrder() {
+        const columnOrder = Array.from(headers).map(header => header.id);
+        localStorage.setItem("columnOrder", JSON.stringify(columnOrder));
+    }
+
+    // Load column order from localStorage (if available)
+    function loadColumnOrder() {
+        const savedOrder = JSON.parse(localStorage.getItem("columnOrder"));
+        if (savedOrder) {
+            const newHeaders = [];
+            const newRows = [];
+
+            for (const colId of savedOrder) {
+                const header = document.getElementById(colId);
+                newHeaders.push(header);
+
+                // Get the column data from each row and reorder
+                for (let row of rows) {
+                    const cell = row.querySelector(`#${colId}`);
+                    newRows.push(cell);
+                }
+            }
+
+            // Reorder the columns based on saved order
+            const tbody = table.querySelector("tbody");
+            newHeaders.forEach(header => {
+                table.querySelector("thead tr").appendChild(header);
+            });
+
+            newRows.forEach(cell => {
+                tbody.appendChild(cell.parentNode); // Append the entire row with the correct column order
+            });
+        }
+    }
+
+    // Load the saved column order on page load
+    loadColumnOrder();
+});
+
+
+</script>
+
+</body>
+</html>
