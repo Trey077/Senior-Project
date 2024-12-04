@@ -118,9 +118,8 @@
     </div>
 
     <!-- Dropdown list to select an idea from the available options -->
-    <select id="ideaDropdown" onchange="populateForm()" size="10"> <!-- Increased size to show more options -->
+    <select id="ideaDropdown" onchange="populateForm()" size="10">
         <option value="">--Select an Idea--</option>
-        <!-- Loop through the ideas and create an option for each one -->
         {% for idea in dropdown_ideas %}
             <option value="{{ idea.reference }}">{{ idea.reference }} - {{ idea.name }}</option>
         {% endfor %}
@@ -138,8 +137,15 @@
         <label for="Categories">Categories:</label>
         <input type="text" id="Categories" name="Categories">
 
+        <!-- Dropdown for Assigned_to -->
         <label for="Assigned_to">Assigned to:</label>
-        <input type="text" id="Assigned_to" name="Assigned_to">
+        <select id="Assigned_to" name="Assigned_to">
+            <option value="">--Select Assignee--</option>
+            <!-- Loop through the assignees passed from Flask to populate the dropdown -->
+            {% for assignee in assignees %}
+                <option value="{{ assignee }}">{{ assignee }}</option>
+            {% endfor %}
+        </select>
 
         <label for="Status">Status:</label>
         <input type="text" id="Status" name="Status">
@@ -166,6 +172,7 @@
     <!-- Submit button to submit the form -->
     <button type="submit">Submit</button>
 </form>
+
 
 </body>
 </html>
