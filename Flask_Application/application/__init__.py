@@ -115,13 +115,15 @@ def create_app():
             # Fetch all columns from the 'Idea_Database' table
             result = db.session.execute(text("SELECT * FROM Idea_Database;")).fetchall()
 
-            # Print the result for debugging
-            print(f"Fetched rows: {result}")
+            # Fetch distinct assigned_to values for the dropdown
+            assignees_query = text("SELECT DISTINCT \"Assigned_to\" FROM Idea_Database")
+            assignees_result = db.session.execute(assignees_query)
+            assignees = [row[0] for row in assignees_result]  # Extract distinct assignees
 
             # Ensure valid rows were returned
             if not result:
                 flash("No ideas found in the database.", "warning")
-                return render_template('EditIdea.html', ideas=[])
+                return render_template('EditIdea.html', ideas=[], assignees=[])
 
             # Define column names to map the results to a dictionary
             column_names = ['Idea Reference', 'Name', 'Categories', 'Assigned_to', 'Status', 'Created_at', 'Votes',
@@ -133,11 +135,11 @@ def create_app():
                 idea_data = {column_names[i]: row[i] for i in range(len(column_names))}
                 ideas.append(idea_data)
 
-            # Prepare list of references and names for dropdown
+            # Prepare list of references and names for the dropdown
             dropdown_ideas = [{'reference': idea['Idea Reference'], 'name': idea['Name']} for idea in ideas]
 
-            # Render the template and pass the ideas and dropdown list
-            return render_template('EditIdea.html', ideas=ideas, dropdown_ideas=dropdown_ideas)
+            # Render the template and pass the ideas and assignees list
+            return render_template('EditIdea.html', ideas=ideas, dropdown_ideas=dropdown_ideas, assignees=assignees)
 
         except Exception as e:
             print(f"Error: {e}")
