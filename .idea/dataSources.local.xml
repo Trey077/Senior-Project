@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="PY-242.23726.102">
+  <component name="dataSourceStorageLocal" created-in="PY-242.20224.428">
     <data-source name="persistent_database" uuid="ea2fc886-0660-497a-a940-b2cc6f7c6d5b">
       <database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
         <identifier-quote-string>&quot;</identifier-quote-string>
@@ -13,7 +13,12 @@
         </introspection-scope>
       </schema-mapping>
     </data-source>
-    <data-source name="persistent_database [2]" uuid="307271ca-f7e5-4d32-8b49-31bf07a74700">
+    <data-source name="{database_path}" uuid="31df0368-939e-4448-8678-1b5b7d960607">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="SQLITE" />
+      <auth-provider>no-auth</auth-provider>
+      <schema-mapping />
+    </data-source>
+    <data-source name="test_database" uuid="51dd0d9d-7e68-4318-a325-0a8fbf845b68">
       <database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>

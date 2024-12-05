@@ -1,3 +1,5 @@
+import logging
+
 import requests
 import pandas as pd
 import json
@@ -10,7 +12,7 @@ load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
 
-def call_data():
+def call_data(api_key, base_url, endpoint):
 
 
     url = 'https://cpsideas.aha.io/api/v1/bookmarks/custom_pivots'
@@ -73,8 +75,15 @@ def call_data():
             print(f"Error: {response.status_code} - {response.text}")
             break
 
-    return all_ideas
+    df = pd.DataFrame(all_ideas)
+    logging.info(f"Fetched {len(df)} records from the API")
+    return df
 
 
-print(os.getcwd())
+call_data()
+
+
+
+
+
 
