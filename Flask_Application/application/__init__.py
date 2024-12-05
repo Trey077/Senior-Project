@@ -45,6 +45,22 @@ def create_app():
     db.init_app(app)
 
 
+#data pipeline
+    ''''
+      with app.app_context():
+       process_and_store(api_key=app.config['API_KEY'],
+           base_url=app.config['BASE_URL'],
+           endpoint=app.config['ENDPOINT'],
+           model_path=app.config['MODEL_PATH'],
+           num_topics=app.config['NUM_TOPICS'],
+           topic_docs=app.config['TOPIC_DOCS'],
+           db_path=app.config['DATABASE_PATH'],
+           table_name=app.config['TABLE_NAME'],
+         merge_column=app.config['TEXT_COLUMN']
+      )
+       '''
+
+
 
     # Define routes
     @app.route('/', methods=['GET', 'POST'])
