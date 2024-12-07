@@ -1,329 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script type="text/javascript" charset="utf-8" src="https://secure.aha.io/assets/javascript_api/aha-api.latest.js"></script>
-
+    <!-- Character encoding and viewport settings -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='Styles.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
 
-<div class="navbar">
-    <a href="#home">Home</a>
-    <div class="dropdown">
-        <button class="dropbtn">Actions
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-            <a href="{{ url_for('merge_page') }}">Merge</a>
+    <!-- Page title displayed in the browser tab -->
+    <title>Dashboard</title>
+
+    <!-- External CSS stylesheet for the page -->
+    <link rel="stylesheet" href="../static/Styles.css">
+
+    <!-- Include Sortable.js for drag-and-drop functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+
+    <!-- Include FontAwesome icons for UI components -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+<header>
+    <!-- Navbar section with logo and links -->
+    <a href="{{ url_for('test_database', page=1) }}">
+        <img class="NavbarLogo" src="../static/Pictures/CPSI_107301_Intranet_logo_resizes_V1.png" alt="TruBridge Logo">
+    </a>
+
+    <div class="navbar">
+        <!-- Home link -->
+        <a href="{{ url_for('test_database', page=1) }}">Home</a>
+          <a href="{{ url_for('new_dashboard') }}">Change View</a>
+        <!-- Dropdown menu for actions (Edit Ideas and Logout) -->
+        <div class="dropdown">
+            <button class="dropbtn">Actions
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="{{ url_for('edit_page') }}">Edit Ideas</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </div>
+        </div>
+
+        <!-- Search Bar and Tag Filter -->
+        <div class="search-container">
+            <form action="{{ url_for('test_database') }}" method="get">
+                <!-- Search Bar for filtering ideas by name or description -->
+                <input type="text" name="search" id="searchInput" placeholder="Search..." value="{{ search_query }}">
+
+                <!-- Search button with an icon -->
+                <button type="submit" id="searchButton"><i class="fa fa-search"></i></button>
+
+                <!-- Tag Filter Dropdown for filtering ideas by tags -->
+                <select name="tag" id="tagSelect" onchange="this.form.submit()">
+                    <option disabled selected>Filter by Tags</option>
+                    {% for tag in tags %}
+                        <option value="{{ tag }}" {% if tag == selected_tag %} selected {% endif %}>{{ tag }}</option>
+                    {% endfor %}
+                </select>
+            </form>
         </div>
     </div>
-    <div class="search-bar"></div>
-    <input type="text" id="searchInput" placeholder="Search ideas..." aria-label="Search" oninput="highlightSearch()" onkeydown="checkEnter(event)">
+</header>
 
-    </div>
-</div>
+<!-- Main page heading -->
+<h1>Product Owner Tool Dashboard</h1>
 
-<div class="dashboard">
-    <h3>Idea Dashboard</h3>
-    <table id="ideaTable">
+<!-- Check if there are rows to display -->
+{% if rows %}
+    <!-- Table for displaying idea data -->
+    <table id="customizable-table">
         <thead>
             <tr>
-                <th>Select</th>
-                <th>Idea ID</th>
-                <th>Idea Name</th>
-                <th>Idea Category</th>
-                <th>Idea Description</th>
-                <th>
-                    Idea Assigned To
-                    <div class="dropdown" style="display:inline-block; margin-left: 10px;">
-                        <button class="dropbtn1">
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                        <div class="dropdown-content">
-                            <a href="#" onclick="sortTable(3, 'asc')">A-Z</a>
-                            <a href="#" onclick="sortTable(3, 'desc')">Z-A</a>
-                        </div>
-                    </div>
-                </th>
-                <th>Idea Status</th>
-                <th>Idea Creation Date</th>
-                <th>Idea Votes</th>
-                <th>Unique Votes</th>
-                <th>Idea Tags</th>
+                <!-- Table headers are draggable to allow column rearrangement -->
+                <th draggable="true" id="col1">Idea Reference</th>
+                <th draggable="true" id="col2">Name</th>
+                <th draggable="true" id="col3">Categories</th>
+                <th draggable="true" id="col4">Assigned To</th>
+                <th draggable="true" id="col5">Status</th>
+                <th draggable="true" id="col6">Created At</th>
+                <th draggable="true" id="col7">Votes</th>
+                <th draggable="true" id="col8">Tags</th>
+                <th draggable="true" id="col9">Description</th>
+                <th draggable="true" id="col10">Email</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=1">1</a></td>  
-                <td><a href="ideaDetails.html?id=1">Idea One</a></td>
-                <td><span class="idea-category">Category A</span></td>
-                <td>Description of Idea One</td>
-                <td><a href="userProfile.html?user=JohnDoe">John Doe</a></td>
-                <td><span class="idea-statusComment">Open for Comment</span></td>
-                <td>2023-01-01</td>
-                <td>10</td>
-                <td>8</td>
-                <td><span class="idea-tag1">tag1</span>, <span class="idea-tag2">tag2</span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=2">2</a></td>  
-                <td><a href="ideaDetails.html?id=2">Idea Two</a></td>
-                <td><span class="idea-category">Category B</span></td>
-                <td>Description of Idea Two</td>
-                <td><a href="userProfile.html?user=JaneSmith">Jane Smith</a></td>
-                <td><span class="idea-statusReview">Under Review</span></td>
-                <td>2023-02-01</td>
-                <td>15</td>
-                <td>12</td>
-                <td><span class="idea-tag3">tag3</span>, <span class="idea-tag4">tag4</span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=3">3</a></td>  
-                <td><a href="ideaDetails.html?id=3">Idea Three</a></td>
-                <td><span class="idea-category">Category C</span></td>
-                <td>Description of Idea Three</td>
-                <td><a href="userProfile.html?user=JohnnyCash">Johnny Cash</a></td>
-                <td><span class="idea-statusShipped">Shipped</span></td>
-                <td>2023-02-10</td>
-                <td>22</td>
-                <td>14</td>
-                <td><span class="idea-tag3">tag3</span>, <span class="idea-tag2">tag2</span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=4">4</a></td>  
-                <td><a href="ideaDetails.html?id=4">Idea Four</a></td>
-                <td><span class="idea-category">Category A</span></td>
-                <td>Description of Idea Four</td>
-                <td><a href="userProfile.html?user=BobDylan">Bob Dylan</a></td>
-                <td><span class="idea-statusProgress">In Progress</span></td>
-                <td>2023-03-15</td>
-                <td>30</td>
-                <td>18</td>
-                <td><span class="idea-tag4">tag4</span>, <span class="idea-tag1">tag1</span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=6">6</a></td>  
-                <td><a href="ideaDetails.html?id=6">Idea Six</a></td>
-                <td><span class="idea-category">Category C</span></td>
-                <td>Description of Idea Six</td>
-                <td><a href="userProfile.html?user=EltonJohn">Elton John</a></td>
-                <td><span class="idea-statusExist">Already Exist</span></td>
-                <td>2023-05-25</td>
-                <td>12</td>
-                <td>5</td>
-                <td><span class="idea-tag6">tag6</span>, <span class="idea-tag3">tag3</span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=7">7</a></td>  
-                <td><a href="ideaDetails.html?id=7">Idea Seven</a></td>
-                <td><span class="idea-category">Category A</span></td>
-                <td>Description of Idea Seven</td>
-                <td><a href="userProfile.html?user=TaylorSwift">Taylor Swift</a></td>
-                <td><span class="idea-statusProgress">In Progress</span></td>
-                <td>2023-06-30</td>
-                <td>28</td>
-                <td>22</td>
-                <td><span class="idea-tag7">tag7</span>, <span class="idea-tag1">tag1</span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=8">8</a></td>  
-                <td><a href="ideaDetails.html?id=8">Idea Eight</a></td>
-                <td><span class="idea-category">Category B</span></td>
-                <td>Description of Idea Eight</td>
-                <td><a href="userProfile.html?user=BillieEilish">Billie Eilish</a></td>
-                <td><span class="idea-statusFuture">Future Development</span></td>
-                <td>2023-07-12</td>
-                <td>36</td>
-                <td>19</td>
-                <td><span class="idea-tag8">tag8</span>, <span class="idea-tag4">tag4</span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" onchange="toggleRow(this)"></td>
-                <td><a href="ideaDetails.html?id=9">9</a></td>  
-                <td><a href="ideaDetails.html?id=9">Idea Nine</a></td>
-                <td><span class="idea-category">Category C</span></td>
-                <td>Description of Idea Nine</td>
-                <td><a href="userProfile.html?user=FreddieMercury">Freddie Mercury</a></td>
-                <td><span class="idea-statusTerminated">Terminated</span></td>
-                <td>2023-08-15</td>
-                <td>50</td>
-                <td>30</td>
-                <td><span class="idea-tag9">tag9</span>, <span class="idea-tag2">tag2</span></td>
-            </tr>
+            <!-- Loop through each row of data and display it -->
+            {% for row in rows %}
+                <tr>
+                    <!-- Display data for each idea, each inside a table cell -->
+                    <td><span id="reference"><a href="#">{{ row['Idea Reference'] }}</a></span></td>
+                    <td>{{ row['Name'] }}</td>
+                    <td><li id="categories">{{ row['Categories'] }}</li></td>
+                    <td><a href="#">{{ row['Assigned_to'] }}</a></td>
+                    <td>{{ row['Status'] }}</td>
+                    <td>{{ row['Created_at'] }}</td>
+                    <td>{{ row['Votes'] }}</td>
+                    <td>{{ row['Tags'] }}</td>
+                    <td>{{ row['Description'] }}</td>
+                    <td><a href="#">{{ row['Email'] }}</a></td>
+                </tr>
+            {% endfor %}
         </tbody>
-        
-        
-        
     </table>
+{% else %}
+    <!-- If no data is found, display a message -->
+    <p>No data found.</p>
+{% endif %}
+
+<!-- Pagination controls -->
+<div class="pagination">
+    <!-- If the current page is greater than 1, show "First" and "Prev" buttons -->
+    {% if page > 1 %}
+        <a href="{{ url_for('test_database', page=1) }}" class="pagination-btn">First</a>
+        <a href="{{ url_for('test_database', page=page-1) }}" class="pagination-btn">‹ Prev</a>
+    {% else %}
+        <span class="pagination-btn disabled">First</span>
+        <span class="pagination-btn disabled">‹ Prev</span>
+    {% endif %}
+
+    <!-- Display the current page and total pages -->
+    <span class="pagination-info">Page {{ page }} of {{ total_pages }}</span>
+
+    <!-- If the current page is less than total pages, show "Next" and "Last" buttons -->
+    {% if page < total_pages %}
+        <a href="{{ url_for('test_database', page=page+1) }}" class="pagination-btn">Next ›</a>
+        <a href="{{ url_for('test_database', page=total_pages) }}" class="pagination-btn">Last</a>
+    {% else %}
+        <span class="pagination-btn disabled">Next ›</span>
+        <span class="pagination-btn disabled">Last</span>
+    {% endif %}
 </div>
 
-<!-- Context menu for right-click -->
-<div class="context-menu" id="contextMenu">
-    <div onclick="deleteColumn()">Delete Column</div>
-</div>
-
-
+<!-- JavaScript to handle drag-and-drop column reordering -->
 <script>
-    function sortTable(columnIndex, order) {
-        const table = document.getElementById("ideaTable");
-        const rows = Array.from(table.rows).slice(1);
-        const sortedRows = rows.sort((a, b) => {
-            const cellA = a.cells[columnIndex].innerText.toLowerCase();
-            const cellB = b.cells[columnIndex].innerText.toLowerCase();
-            return order === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+    document.getElementById("tagSelect").selectedIndex = 0;  // Reset tag selection to first option
+
+    // Wait for the DOM to fully load before executing scripts
+    document.addEventListener("DOMContentLoaded", function() {
+        const table = document.getElementById("customizable-table");
+        const headers = table.querySelectorAll("th");
+        const rows = table.querySelector("tbody").children;
+
+        // Enable drag-and-drop for table headers
+        headers.forEach(header => {
+            header.addEventListener("dragstart", handleDragStart);
+            header.addEventListener("dragover", handleDragOver);
+            header.addEventListener("drop", handleDrop);
+            header.addEventListener("dragenter", handleDragEnter);
+            header.addEventListener("dragleave", handleDragLeave);
         });
-        const tbody = table.tBodies[0];
-        tbody.innerHTML = "";
-        sortedRows.forEach(row => tbody.appendChild(row));
-    }
 
-    function toggleRow(checkbox) {
-        const row = checkbox.closest('tr');
-        if (checkbox.checked) {
-            row.classList.add('selected');
-        } else {
-            row.classList.remove('selected');
+        let draggedHeader = null;
+
+        // Handle drag start event (store the dragged header)
+        function handleDragStart(e) {
+            draggedHeader = e.target;
+            e.target.style.opacity = "0.5"; // Make the dragged header semi-transparent
         }
-    }
-</script>
 
+        // Allow the dragged column to be dropped over another column header
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.target.classList.add("drag-over"); // Add visual feedback when hovering over a header
+        }
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<script>
-        let currentColumnIndex;
-    $(function() {
-        // Make table headers sortable
-        $("#ideaTable thead tr").sortable({
-            items: "th",
-            cursor: "move",
-            axis: "x",
-            stop: function(event, ui) {
-                var newOrder = $(this).children().map(function() {
-                    return $(this).index();
-                }).get();
+        // Swap columns when dropped
+        function handleDrop(e) {
+            e.preventDefault();
+            if (e.target.tagName.toLowerCase() === "th" && draggedHeader !== e.target) {
+                const draggedIndex = Array.from(headers).indexOf(draggedHeader);
+                const targetIndex = Array.from(headers).indexOf(e.target);
 
-                // Rearrange each row's cells based on new order
-                $('#ideaTable tbody tr').each(function() {
-                    var row = $(this);
-                    var cells = row.children('td').detach();
-                    var newCells = [];
+                // Swap the column headers
+                const tempHeader = draggedHeader.textContent;
+                draggedHeader.textContent = e.target.textContent;
+                e.target.textContent = tempHeader;
 
-                    $.each(newOrder, function(index, value) {
-                        newCells.push(cells.eq(value));
-                    });
+                // Swap the corresponding column data in each row
+                for (let row of rows) {
+                    const draggedCell = row.children[draggedIndex];
+                    const targetCell = row.children[targetIndex];
 
-                    // Append the new ordered cells
-                    $.each(newCells, function(index, cell) {
-                        row.append(cell);
-                    });
+                    row.replaceChild(draggedCell, targetCell);
+                    row.insertBefore(targetCell, row.children[draggedIndex]);
+                }
+
+                // Save the new column order to localStorage
+                saveColumnOrder();
+            }
+            e.target.classList.remove("drag-over");
+        }
+
+        // Add visual feedback when dragging enters a column header
+        function handleDragEnter(e) {
+            if (e.target.tagName.toLowerCase() === "th") {
+                e.target.classList.add("drag-over");
+            }
+        }
+
+        // Remove visual feedback when dragging leaves a column header
+        function handleDragLeave(e) {
+            if (e.target.tagName.toLowerCase() === "th") {
+                e.target.classList.remove("drag-over");
+            }
+        }
+
+        // Save the current column order to localStorage
+        function saveColumnOrder() {
+            const columnOrder = Array.from(headers).map(header => header.id);
+            localStorage.setItem("columnOrder", JSON.stringify(columnOrder));
+        }
+
+        // Load the saved column order from localStorage (if available)
+        function loadColumnOrder() {
+            const savedOrder = JSON.parse(localStorage.getItem("columnOrder"));
+            if (savedOrder) {
+                const newHeaders = [];
+                const newRows = [];
+
+                // Reorder the headers and row cells according to the saved order
+                for (const colId of savedOrder) {
+                    const header = document.getElementById(colId);
+                    newHeaders.push(header);
+
+                    // Get the corresponding column data for each row and reorder
+                    for (let row of rows) {
+                        const cell = row.querySelector(`#${colId}`);
+                        newRows.push(cell);
+                    }
+                }
+
+                // Reorder headers and rows in the table
+                const tbody = table.querySelector("tbody");
+                newHeaders.forEach(header => {
+                    table.querySelector("thead tr").appendChild(header);
+                });
+
+                newRows.forEach(cell => {
+                    tbody.appendChild(cell.parentNode); // Append the row with its correctly ordered columns
                 });
             }
-        }).disableSelection();
+        }
+
+        // Load the saved column order on page load
+        loadColumnOrder();
     });
-
-
-    // Function to highlight search terms
-    function highlightSearch() {
-        const input = document.getElementById('searchInput').value;
-        const table = document.getElementById('ideaTable');
-        const rows = table.getElementsByTagName('tr');
-
-        // Remove previous highlights
-        for (let i = 1; i < rows.length; i++) {
-            const cells = rows[i].getElementsByTagName('td');
-            for (let j = 0; j < cells.length; j++) {
-                cells[j].innerHTML = cells[j].innerHTML.replace(/<span class="highlight">(.*?)<\/span>/g, '$1');
-            }
-        }
-
-        // Highlight new search term
-        if (input) {
-            const regex = new RegExp(input, 'gi');
-            for (let i = 1; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName('td');
-                for (let j = 0; j < cells.length; j++) {
-                    cells[j].innerHTML = cells[j].innerHTML.replace(regex, (match) => `<span class="highlight">${match}</span>`);
-                }
-            }
-        }
-    }
-
-    // Function to delete a column
-    function deleteColumn() {
-        if (currentColumnIndex !== undefined) {
-            const table = document.getElementById("ideaTable");
-            const headers = table.getElementsByTagName('th');
-            const rows = table.getElementsByTagName('tr');
-
-            // Remove header cell
-            headers[currentColumnIndex].remove();
-
-            // Remove corresponding cells from each row
-            for (let i = 0; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName('td');
-                if (cells[currentColumnIndex]) {
-                    cells[currentColumnIndex].remove();
-                }
-            }
-
-            // Hide context menu
-            document.getElementById("contextMenu").style.display = "none"; 
-        }
-    }
-
-    // Toggle row selection
-    function toggleRow(checkbox) {
-        const row = checkbox.closest('tr');
-        if (checkbox.checked) {
-            row.classList.add('selected');
-        } else {
-            row.classList.remove('selected');
-        }
-    }
-
-    // Sort table function
-    function sortTable(columnIndex, order) {
-        const table = document.getElementById("ideaTable");
-        const rows = Array.from(table.rows).slice(1);
-        const sortedRows = rows.sort((a, b) => {
-            const cellA = a.cells[columnIndex].innerText.toLowerCase();
-            const cellB = b.cells[columnIndex].innerText.toLowerCase();
-            return order === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
-        });
-        const tbody = table.tBodies[0];
-        tbody.innerHTML = "";
-        sortedRows.forEach(row => tbody.appendChild(row));
-    }
-
-    // Right-click context menu
-    document.querySelectorAll('#ideaTable th').forEach((th, index) => {
-        th.addEventListener('contextmenu', function (e) {
-            e.preventDefault();
-            currentColumnIndex = index; // Store the current column index
-            const contextMenu = document.getElementById("contextMenu");
-            contextMenu.style.display = "block";
-            contextMenu.style.top = e.pageY + 'px';
-            contextMenu.style.left = e.pageX + 'px';
-        });
-    });
-
-    // Hide context menu when clicking elsewhere
-    document.addEventListener('click', function() {
-        document.getElementById("contextMenu").style.display = "none";
-    });
-
 </script>
 
 </body>
